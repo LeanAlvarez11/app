@@ -8,7 +8,7 @@ var wachin= {
 	y: (canvas.height /2 ) -20,
 	width:150,
 	height:150,
-	image:new Image(),
+	image: new Image()
 }
 var malo={
 	hp:100,
@@ -25,58 +25,68 @@ var textoRespuesta={
 var juego={
 	estado:"jugando"
 }
+var preguntas =["quien es la madre de todo",
+"quien fue marucio macri",
+"cuantos dedos tiene un mono"];
+var respuestas = [
+["tu vieja","la pachamama","la monalisa","mirta legrand"],
+["tu vieja","un presidente","un gato","un pelotudo"],
+["tu vieja","que se yo amigo no se ingles","que te importa gato","me gusta la mama de mi amigo"]]
+
+
+var rc;
 function loadMedia (){
 	fondo= new Image();
 	fondo.src="fondo.jfif";
-	wachin.image.src= "pp.jpg";
+	wachin.image.src= "wachin.png";
 	malo.image.src="opa.png"
 	document.getElementById("canvasDiv").style="display:inline";
 	fondo.onload= function(){
-	var intervalo = window.setInterval(frameloop,1000/55);}
-}
-function dibujarFondo (){
-	ctx.drawImage (fondo,0,0);
+		var intervalo = window.setInterval(frameloop,1000/55);}
+	}
+	function dibujarFondo (){
+		ctx.drawImage (fondo,0,0);
 		ctx.fillStyle="red";
-	ctx.font = "bold 22px sans-serif";
-	ctx.fillText("Player 1 HP: " +wachin.hp,50,100);
-	ctx.fillText("Player 2 HP: " +malo.hp,400,100);
+		ctx.font = "bold 22px sans-serif";
+		ctx.fillText("Player 1 HP: " +wachin.hp,50,100);
+		ctx.fillText("Player 2 HP: " +malo.hp,400,100);
 
-}
-function dibujarWachin (pj){
-	ctx.save();
-	ctx = canvas.getContext('2d');
-	ctx.drawImage(pj.image, 
-		pj.x, 
-		pj.y,
-		pj.width, pj.height)
+	}
+	function dibujarWachin (pj){
+		ctx.save();
+		ctx = canvas.getContext('2d');
+		ctx.drawImage(pj.image, 
+			pj.x, 
+			pj.y,
+			pj.width, pj.height)
 		ctx.restore();
 	}
-function pinia(){
+	function pinia(){
 	//animacionPiña
 	wachin.width=300
 	setTimeout(function (){
-	wachin.width=150
+		wachin.width=150
 	},1000)
 }
 function patada(){
 	//animacionPatada
 	wachin.height=500
 	setTimeout(function (){
-	wachin.height=150
+		wachin.height=150
 	},1000)
 }
 function espada(){
 	//animacionEspada
 	wachin.image.src="opa.png"
 	setTimeout(function (){
-	wachin.image.src="pp.jpg"
+		wachin.image.src="pp.jpg"
 	},1000)
 }
 function cabeza(){
 	//animacionCabeza
 	wachin.x=400
 	setTimeout(function (){
-	wachin.x=50
+		wachin.x=50
 	},1000)
 }
 function actualizar(){
@@ -101,31 +111,31 @@ function actualizar(){
 	document.querySelector("input[type=radio]:checked").checked = false
 	if (malo.hp<=0) {
 		juego.estado="ganaste";
-		}
+	}
 	else if (wachin.hp==0){
 		juego.estado="perdiste"	
 	}
 }
 function jugando(){
-		if (juego.estado=="ganaste"){
-			textoRespuesta.titulo="Derrotaste a tu estupidez, bien ahi flaco"
-			textoRespuesta.subtitulo="Pulsa R para reiniciar"
-			document.getElementById("texto").innerHTML = "<p id='titulo'>"+textoRespuesta.titulo+"</p>"
-			document.getElementById("texto").innerHTML += "<p id='subtitulo'>"+textoRespuesta.subtitulo+"</p>"
-			document.getElementById("canvas").style.display = "none"
-			document.getElementById("res").style.display = "none"
-		}
-		else if (juego.estado=="perdiste"){
-			textoRespuesta.titulo="Bueno.. al parecer tus papas son primos man"
-			textoRespuesta.subtitulo="Pulsa R para reiniciar"
-			ctx.fillStyle="white";
-			ctx.font="Bold 40pt Arial"
-			document.getElementById("texto").innerHTML(textoRespuesta.titulo)
-			ctx.font="14pt Arial";
-			document.getElementById("texto").innerHTML(textoRespuesta.subtitulo)			
-			document.getElementById("canvasDiv").style="display:none"
-			document.getElementById("res").style.display = "none"
-		}
+	if (juego.estado=="ganaste"){
+		textoRespuesta.titulo="Derrotaste a tu estupidez, bien ahi flaco"
+		textoRespuesta.subtitulo="Pulsa R para reiniciar"
+		document.getElementById("texto").innerHTML = "<p id='titulo'>"+textoRespuesta.titulo+"</p>"
+		document.getElementById("texto").innerHTML += "<p id='subtitulo'>"+textoRespuesta.subtitulo+"</p>"
+		document.getElementById("canvas").style.display = "none"
+		document.getElementById("res").style.display = "none"
+	}
+	else if (juego.estado=="perdiste"){
+		textoRespuesta.titulo="Bueno.. al parecer tus papas son primos man"
+		textoRespuesta.subtitulo="Pulsa R para reiniciar"
+		ctx.fillStyle="white";
+		ctx.font="Bold 40pt Arial"
+		document.getElementById("texto").innerHTML(textoRespuesta.titulo)
+		ctx.font="14pt Arial";
+		document.getElementById("texto").innerHTML(textoRespuesta.subtitulo)			
+		document.getElementById("canvasDiv").style="display:none"
+		document.getElementById("res").style.display = "none"
+	}
 }
 function dibujarHp(){
 
@@ -134,8 +144,71 @@ function frameloop(){
 	dibujarFondo();
 	dibujarWachin(wachin);
 	dibujarWachin(malo);
-	actualizar();
+	// actualizar();
 	jugando()
+}
+
+jugar();
+
+
+function jugar(){
+	var indice_aleatorio = Math.floor(Math.random()*preguntas.length);
+	var respuestas_posibles = respuestas[indice_aleatorio];
+
+	var posiciones = [0,1,2,3];
+	var respuestas_ordenadas= [];
+
+	var ya=false;
+	for (i in respuestas_posibles){
+		var posicion_aleatoria = Math.floor(Math.random()*posiciones.length);
+		if (posicion_aleatoria==0 && ya==false){
+			rc=i;
+			ya=true;
+		}
+		respuestas_ordenadas[i]=respuestas_posibles[posiciones[posicion_aleatoria]];
+		posiciones.splice(posicion_aleatoria,1);
+	}
+	var txt_respuestas=""
+	for (i in respuestas_ordenadas)
+	{
+		txt_respuestas+="<input type='radio' name='res' value='"+i+"' id='r"+i+"'><label for='r"+i+"'>"+respuestas_ordenadas[i]+"</label><br>";
+	}
+	document.getElementById("res").innerHTML=txt_respuestas;
+	document.getElementById("pregunta").innerHTML = preguntas[indice_aleatorio];
+}
+function comprobar(){
+	var respuesta = $("input[type=radio]:checked").val();
+	if(respuesta==rc){
+		if (respuesta==0){
+			pinia();
+			malo.hp-=10
+
+		}
+		else if (respuesta==1){
+			patada();
+			malo.hp-=10
+		}
+		else if (respuesta==2){
+			espada();
+			malo.hp-=10
+		}
+		else if (respuesta==3){
+			cabeza();
+			malo.hp-=10
+		}
+	}
+	else{
+		wachin.hp-=10
+		alert("malardo")
+	}
+	document.querySelector("input[type=radio]:checked").checked = false
+	if (malo.hp<=0) {
+		juego.estado="ganaste";
+	}
+	else if (wachin.hp==0){
+		juego.estado="perdiste"	
+	}
+	jugar();
 }
 
 loadMedia();

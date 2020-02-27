@@ -12,3 +12,19 @@ header{
 		size:"40vw";
 		font-family:"Arial"
 }
+
+#contain{
+	display: grid;
+		grid-template-columns: 60vw 40vw;
+		grid-template-rows: auto; 
+		grid-template-areas: "canvas body"
+}
+#canvas{
+	grid-area: canvas;
+}
+#preg{
+	grid-area: body;
+
+
+
+}
