@@ -4,8 +4,8 @@ canvas.width= 600
 canvas.height = 500
 var ctx = canvas.getContext('2d');
 
-var spriteWidth = 2016; 
-var spriteHeight = 902; 
+var spriteWidth = 900; 
+var spriteHeight = 350; 
 
 var rows = 1; 
 var cols = 4; 
@@ -19,15 +19,14 @@ var curFrame = 0;
 
 var frameCount = 4; 
 
-var x=0;
-var y=0; 
-
+var x=50;
+var y= (canvas.height /2 ) -150;
 var srcX=0; 
 var srcY=0; 
 
 var character = new Image(); 
 			
-character.src = "wachin.png";
+character.src = "theBoy3.png";
 
 function updateFrame(){
 	
@@ -48,16 +47,11 @@ function draw(){
 
 var wachin= {
 	hp:100,
-	x:50,
-	y: (canvas.height /2 ) -20,
-	width:80,
-	height:80,
-	image: new Image()
 }
 var malo={
 	hp:100,
-	x:200,
-	y: (canvas.height /2 ) -200,
+	x:400,
+	y: (canvas.height /2 ) -150,
 	width:150,
 	height:350,
 	image:new Image(),
@@ -70,28 +64,25 @@ var juego={
 	estado:"jugando"
 }
 var preguntas =[]
-data[0].data.forEach(e=>preguntas.push(e.question.split(",")))
+data[0].data.forEach(e=>preguntas.push(e.question))
 var respuestas=[]
 data[0].data.forEach (e=>respuestas.push(e.answers.split(",")))
-
 
 var rc;
 function loadMedia (){
 	fondo= new Image();
 	fondo.src="fond.jpg";
-
-	wachin.image.src= "wachin.png";
 	malo.image.src="opa.png"
 	document.getElementById("canvasDiv").style="display:inline";
 	fondo.onload= function(){
-		var intervalo = window.setInterval(frameloop,1000/55);}
+		var intervalo = window.setInterval(frameloop,1000/5);}
 	}
 	function dibujarFondo (){
 		ctx.drawImage (fondo,0,0);
 		ctx.fillStyle="red";
-		ctx.font = "bold 2vh sans-serif";
-		ctx.fillText("Player 1 HP: " +wachin.hp,50,40);
-		ctx.fillText("Player 2 HP: " +malo.hp,200,40);
+		ctx.font = "bold 5vh sans-serif";
+		ctx.fillText("Player 1 HP: " +wachin.hp,30,40);
+		ctx.fillText("Player 2 HP: " +malo.hp,350,40);
 
 	}
 	function dibujarWachin (pj){
@@ -119,14 +110,14 @@ function patada(){
 }
 function espada(){
 	//animacionEspada
-	wachin.image.src="opa.png"
+	character.src="opa.png"
 	setTimeout(function (){
-		wachin.image.src="wachin.png"
+		character.scr="theBoy.png"
 	},1000)
 }
 function cabeza(){
 	//animacionCabeza
-	wachin.x=200
+	wachin.x=400
 	setTimeout(function (){
 		wachin.x=50
 	},1000)
@@ -164,19 +155,16 @@ function jugando(){
 		textoRespuesta.subtitulo="Pulsa R para reiniciar"
 		document.getElementById("texto").innerHTML = "<p id='titulo'>"+textoRespuesta.titulo+"</p>"
 		document.getElementById("texto").innerHTML += "<p id='subtitulo'>"+textoRespuesta.subtitulo+"</p>"
-		document.getElementById("canvas").style.display = "none"
-		document.getElementById("res").style.display = "none"
-	}
+		document.getElementById("container").classList.remove("d-flex")
+		document.getElementById("container").classList.add("d-none")	
+	} 
 	else if (juego.estado=="perdiste"){
 		textoRespuesta.titulo="Bueno.. al parecer tus papas son primos man"
 		textoRespuesta.subtitulo="Pulsa R para reiniciar"
-		ctx.fillStyle="white";
-		ctx.font="Bold 40pt Arial"
-		document.getElementById("texto").innerHTML(textoRespuesta.titulo)
-		ctx.font="14pt Arial";
-		document.getElementById("texto").innerHTML(textoRespuesta.subtitulo)			
-		document.getElementById("canvasDiv").style="display:none"
-		document.getElementById("res").style.display = "none"
+		document.getElementById("texto").innerHTML = "<p id='titulo'>"+textoRespuesta.titulo+"</p>"
+		document.getElementById("texto").innerHTML += "<p id='subtitulo'>"+textoRespuesta.subtitulo+"</p>"			
+		document.getElementById("container").classList.remove("d-flex")
+		document.getElementById("container").classList.add("d-none")		
 	}
 }
 function dibujarHp(){
@@ -185,16 +173,16 @@ function dibujarHp(){
 function frameloop(){
 	dibujarFondo();
 	draw()
-	dibujarWachin(wachin);
+	// dibujarWachin(wachin);
 	dibujarWachin(malo);
 	// actualizar();
 	jugando()
 }
 
-jugar();
+var yaUsado=[];
+jugar(yaUsado);
 
-
-function jugar(){
+function jugar(asd){
 	var indice_aleatorio = Math.floor(Math.random()*preguntas.length);
 	var respuestas_posibles = respuestas[indice_aleatorio];
 
@@ -216,8 +204,15 @@ function jugar(){
 	{
 		txt_respuestas+="<input type='radio' name='res' value='"+i+"' id='r"+i+"'><label for='r"+i+"'>"+respuestas_ordenadas[i]+"</label><br>";
 	}
-	document.getElementById("res").innerHTML=txt_respuestas;
+
+	if (asd.indexOf(preguntas[indice_aleatorio])==-1){
 	document.getElementById("pregunta").innerHTML = preguntas[indice_aleatorio];
+	asd.push(preguntas[indice_aleatorio])
+	document.getElementById("res").innerHTML=txt_respuestas;	
+	}
+	else{
+		jugar(yaUsado)
+	}
 }
 function comprobar(){
 	var respuesta = $("input[type=radio]:checked").val();
@@ -248,10 +243,10 @@ function comprobar(){
 	if (malo.hp<=0) {
 		juego.estado="ganaste";
 	}
-	else if (wachin.hp==0){
-		juego.estado="perdiste"	
+	else if (wachin.hp<=0){
+		juego.estado="perdiste";
 	}
-	jugar();
+	jugar(yaUsado);
 }
 
 loadMedia();
