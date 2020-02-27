@@ -215,6 +215,7 @@ function jugar(asd){
 	}
 }
 function comprobar(){
+	if (document.querySelector("input[name = res]:checked") != null){
 	var respuesta = $("input[type=radio]:checked").val();
 	if(respuesta==rc){
 		if (respuesta==0){
@@ -247,6 +248,10 @@ function comprobar(){
 		juego.estado="perdiste";
 	}
 	jugar(yaUsado);
+}
+		else{
+			alert("checkea uno puto")
+		}
 }
 
 loadMedia();
