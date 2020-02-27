@@ -1,21 +1,65 @@
 var p2 = false
 var canvas = document.querySelector ("#canvas");
+canvas.width= 600
+canvas.height = 500
 var ctx = canvas.getContext('2d');
+
+var spriteWidth = 2016; 
+var spriteHeight = 902; 
+
+var rows = 1; 
+var cols = 4; 
+
+
+var width = spriteWidth/cols; 
+
+var height = spriteHeight/rows; 
+
+var curFrame = 0; 
+
+var frameCount = 4; 
+
+var x=0;
+var y=0; 
+
+var srcX=0; 
+var srcY=0; 
+
+var character = new Image(); 
+			
+character.src = "wachin.png";
+
+function updateFrame(){
+	
+
+	curFrame = ++curFrame % frameCount; 
+
+	srcX = curFrame * width; 
+
+	//ctx.clearRect(x,y,width,height);
+}
+
+function draw(){
+	
+	updateFrame();
+	
+	ctx.drawImage(character,srcX,srcY,width,height,x,y,width,height);
+}
 
 var wachin= {
 	hp:100,
 	x:50,
 	y: (canvas.height /2 ) -20,
-	width:150,
-	height:150,
+	width:80,
+	height:80,
 	image: new Image()
 }
 var malo={
 	hp:100,
-	x:400,
-	y: (canvas.height /2 ) -20,
+	x:200,
+	y: (canvas.height /2 ) -200,
 	width:150,
-	height:150,
+	height:350,
 	image:new Image(),
 }
 var textoRespuesta={
@@ -25,19 +69,17 @@ var textoRespuesta={
 var juego={
 	estado:"jugando"
 }
-var preguntas =["quien es la madre de todo",
-"quien fue marucio macri",
-"cuantos dedos tiene un mono"];
-var respuestas = [
-["tu vieja","la pachamama","la monalisa","mirta legrand"],
-["tu vieja","un presidente","un gato","un pelotudo"],
-["tu vieja","que se yo amigo no se ingles","que te importa gato","me gusta la mama de mi amigo"]]
+var preguntas =[]
+data[0].data.forEach(e=>preguntas.push(e.question.split(",")))
+var respuestas=[]
+data[0].data.forEach (e=>respuestas.push(e.answers.split(",")))
 
 
 var rc;
 function loadMedia (){
 	fondo= new Image();
-	fondo.src="fondo.jfif";
+	fondo.src="fond.jpg";
+
 	wachin.image.src= "wachin.png";
 	malo.image.src="opa.png"
 	document.getElementById("canvasDiv").style="display:inline";
@@ -47,9 +89,9 @@ function loadMedia (){
 	function dibujarFondo (){
 		ctx.drawImage (fondo,0,0);
 		ctx.fillStyle="red";
-		ctx.font = "bold 22px sans-serif";
-		ctx.fillText("Player 1 HP: " +wachin.hp,50,100);
-		ctx.fillText("Player 2 HP: " +malo.hp,400,100);
+		ctx.font = "bold 2vh sans-serif";
+		ctx.fillText("Player 1 HP: " +wachin.hp,50,40);
+		ctx.fillText("Player 2 HP: " +malo.hp,200,40);
 
 	}
 	function dibujarWachin (pj){
@@ -79,12 +121,12 @@ function espada(){
 	//animacionEspada
 	wachin.image.src="opa.png"
 	setTimeout(function (){
-		wachin.image.src="pp.jpg"
+		wachin.image.src="wachin.png"
 	},1000)
 }
 function cabeza(){
 	//animacionCabeza
-	wachin.x=400
+	wachin.x=200
 	setTimeout(function (){
 		wachin.x=50
 	},1000)
@@ -142,6 +184,7 @@ function dibujarHp(){
 }
 function frameloop(){
 	dibujarFondo();
+	draw()
 	dibujarWachin(wachin);
 	dibujarWachin(malo);
 	// actualizar();
@@ -199,7 +242,7 @@ function comprobar(){
 	}
 	else{
 		wachin.hp-=10
-		alert("malardo")
+		
 	}
 	document.querySelector("input[type=radio]:checked").checked = false
 	if (malo.hp<=0) {
