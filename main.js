@@ -78,7 +78,7 @@ function loadMedia (){
 		var intervalo = window.setInterval(frameloop,1000/5);}
 	}
 	function dibujarFondo (){
-		ctx.drawImage (fondo,0,0);
+		ctx.drawImage (fondo,0,0,600,500);
 		ctx.fillStyle="red";
 		ctx.font = "bold 5vh sans-serif";
 		ctx.fillText("Player 1 HP: " +wachin.hp,30,40);
