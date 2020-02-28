@@ -26,11 +26,32 @@
 			</div> -->
 		</div>
 	</div>
+		<div id="botones">
+			<img onclick="loadQuestions('HTML')" src="htmlogo.png" alt="HTML logo">
+			<img onclick="loadQuestions('CSS')" src="csslogo.png" alt="CSS logo">
+			<img onclick="loadQuestions('JS')" src="jslogo.png" alt="JS logo">
+
+		</div>
 	<div id="texto"></div>
-	<script src="questionsHTML.js"></script>
-	<script src="main.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-database.js"></script>
+	<script>
+        var firebaseConfig = {
+		    apiKey: "AIzaSyBRPTYrGurdv3LGoLbIe3Z7bCSzf1GTiv0",
+		    authDomain: "challenge-mil3r.firebaseapp.com",
+		    databaseURL: "https://challenge-mil3r.firebaseio.com",
+		    projectId: "challenge-mil3r",
+		    storageBucket: "challenge-mil3r.appspot.com",
+		    messagingSenderId: "501597643651",
+		    appId: "1:501597643651:web:e765718303a21aa7b70cb6",
+		    measurementId: "G-JY3E9447J4"
+  		};
+		firebase.initializeApp(firebaseConfig);
+    </script>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script src="main.js"></script>
 </body>
 </html>

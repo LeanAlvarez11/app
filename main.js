@@ -63,17 +63,49 @@ var textoRespuesta={
 var juego={
 	estado:"jugando"
 }
-var preguntas =[]
-data[0].data.forEach(e=>preguntas.push(e.question))
-var respuestas=[]
-data[0].data.forEach (e=>respuestas.push(e.answers.split(",")))
-
+var respuestas = []
+var preguntas = []
+async function loadQuestions(valueRadio){
+	document.getElementById("botones").style="display:none";
+	let database
+	switch(valueRadio){
+		case "HTML":
+			await firebase.database().ref('HTMLQuestion/').once('value')
+		    .then(function(snapshot){
+		        database = snapshot.val()
+		        database.forEach(e=> preguntas.push(e.question))
+		        database.forEach(e=> respuestas.push(e.answers.split(",")))
+		    })
+		  	break;
+		case "CSS":
+			await firebase.database().ref('CSSQuestion/').once('value')
+		    .then(function(snapshot){
+		        database = snapshot.val()
+		        database.forEach(e=> preguntas.push(e.question))
+		        database.forEach(e=> respuestas.push(e.answers.split(",")))
+		    })
+		  	break;
+		case "JS":
+			await firebase.database().ref('JSQuestion/').once('value')
+		    .then(function(snapshot){
+		        database = snapshot.val()
+		        database.forEach(e=> preguntas.push(e.question))
+		        database.forEach(e=> respuestas.push(e.answers.split(",")))
+		    })
+		  	break;
+		default:
+			console.log("Nunca debiste llegar aqui, ahora tomare tu alma")
+	}
+	loadMedia();
+	jugar(yaUsado);
+}
 var rc;
 function loadMedia (){
 	fondo= new Image();
 	fondo.src="fond.jpg";
 	malo.image.src="opa.png"
-	document.getElementById("canvasDiv").style="display:inline";
+	document.getElementById("preg").style="display:inline";
+	document.getElementById("canvasDiv").style="display:inline"
 	fondo.onload= function(){
 		var intervalo = window.setInterval(frameloop,1000/5);}
 	}
@@ -81,8 +113,8 @@ function loadMedia (){
 		ctx.drawImage (fondo,0,0,600,500);
 		ctx.fillStyle="red";
 		ctx.font = "bold 5vh sans-serif";
-		ctx.fillText("Player 1 HP: " +wachin.hp,30,40);
-		ctx.fillText("Player 2 HP: " +malo.hp,350,40);
+		ctx.fillText("WACHIN HP: " +wachin.hp,30,40);
+		ctx.fillText("OPA HP: " +malo.hp,350,40);
 
 	}
 	function dibujarWachin (pj){
@@ -180,7 +212,7 @@ function frameloop(){
 }
 
 var yaUsado=[];
-jugar(yaUsado);
+//jugar(yaUsado);
 
 function jugar(asd){
 	var indice_aleatorio = Math.floor(Math.random()*preguntas.length);
@@ -246,5 +278,7 @@ function comprobar(respuesta){
 	}
 	jugar(yaUsado);
 }
+document.getElementById("preg").style="display:none"
+document.getElementById("canvasDiv").style="display:none"
 
-loadMedia();
+// loadMedia();
