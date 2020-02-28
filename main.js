@@ -202,7 +202,7 @@ function jugar(asd){
 	var txt_respuestas=""
 	for (i in respuestas_ordenadas)
 	{
-		txt_respuestas+="<input type='radio' name='res' value='"+i+"' id='r"+i+"' onclick='comprobar()'><label id='l"+i+"' for='r"+i+"'>"+respuestas_ordenadas[i]+"</label>";
+		txt_respuestas+="<p id='l"+i+"' for='r"+i+"' onclick='comprobar("+i+")'>"+respuestas_ordenadas[i]+" </p>";
 	}
 
 	if (asd.indexOf(preguntas[indice_aleatorio])==-1){
@@ -214,9 +214,7 @@ function jugar(asd){
 		jugar(yaUsado)
 	}
 }
-function comprobar(){
-	if (document.querySelector("input[name = res]:checked") != null){
-	var respuesta = $("input[type=radio]:checked").val();
+function comprobar(respuesta){
 	if(respuesta==rc){
 		if (respuesta==0){
 			pinia();
@@ -240,7 +238,6 @@ function comprobar(){
 		wachin.hp-=10
 		
 	}
-	document.querySelector("input[type=radio]:checked").checked = false
 	if (malo.hp<=0) {
 		juego.estado="ganaste";
 	}
@@ -248,10 +245,6 @@ function comprobar(){
 		juego.estado="perdiste";
 	}
 	jugar(yaUsado);
-}
-		else{
-			alert("checkea uno puto")
-		}
 }
 
 loadMedia();

@@ -28,7 +28,7 @@ header{
 #pregunta{
 	grid-area: pregunta;
 
-	font-size: 3vw;
+	font-size: 4vw;
 	text-shadow: 0 1px 0 #E50E0E, 
                0 2px 0 #CF0F0F,
                0 3px 0 #C01010,
@@ -93,12 +93,6 @@ header{
 #logo{
 	width: 60px;
 }
-#titulo{
-		color:"white";
-		size:"40vw";
-		font-family:"Arial"
-}
-
 #contain{
 		grid-template-columns: 60vw 40vw;
 		grid-template-rows: auto; 
@@ -124,6 +118,9 @@ header{
 	#canvasDiv{
 		width: 60vw;
 		height: 80vh;
+	}
+	#pregunta{
+		font-size: 3vh;
 	}
 	#preg {
 		width: 35vw;
