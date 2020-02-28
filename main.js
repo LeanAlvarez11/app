@@ -18,14 +18,21 @@ var height = spriteHeight/rows;
 var curFrame = 0; 
 
 var frameCount = 4; 
-
+var score=0;
 var x=50;
 var y= (canvas.height /2 ) -150;
 var srcX=0; 
 var srcY=0; 
-
+var timer=10;
 var character = new Image(); 
-			
+var intervalo;
+function timerr(){
+intervalo=setInterval(function(){
+	document.getElementById("timer").innerHTML =timer;
+	timer--;
+},1000)
+}
+
 character.src = "theBoy3.png";
 document.getElementById("texto").style="display:none"
 document.getElementById("preg").style="display:none"
@@ -46,7 +53,7 @@ function draw(){
 	
 	ctx.drawImage(character,srcX,srcY,width,height,x,y,width,height);
 }
-
+var racha=0;
 var wachin= {
 	hp:100,
 }
@@ -70,6 +77,7 @@ var preguntas = []
 async function loadQuestions(valueRadio){
 	document.getElementById("botones").style="display:none";
 	let database
+	loadMedia();
 	switch(valueRadio){
 		case "HTML":
 			await firebase.database().ref('HTMLQuestion/').once('value')
@@ -98,7 +106,6 @@ async function loadQuestions(valueRadio){
 		default:
 			console.log("Nunca debiste llegar aqui, ahora tomare tu alma")
 	}
-	loadMedia();
 	jugar(yaUsado);
 }
 var rc;
@@ -115,9 +122,9 @@ function loadMedia (){
 		ctx.drawImage (fondo,0,0,600,500);
 		ctx.fillStyle="red";
 		ctx.font = "bold 5vh sans-serif";
+		ctx.fillText("Score: "+ score,230,100);
 		ctx.fillText("WACHIN HP: " +wachin.hp,30,40);
 		ctx.fillText("OPA HP: " +malo.hp,350,40);
-
 	}
 	function dibujarWachin (pj){
 		ctx.save();
@@ -156,6 +163,9 @@ function cabeza(){
 		wachin.x=50
 	},1000)
 }
+function enemi(){
+	wachin.hp-=10
+}
 function actualizar(){
 	var respuesta = $("input[type=radio]:checked").val()
 	if (respuesta==1){
@@ -184,6 +194,10 @@ function actualizar(){
 	}
 }
 function jugando(){
+	if (timer<=0){
+		comprobar()		
+		jugar();
+	}
 	if (juego.estado=="ganaste"){
 		document.getElementById("texto").style="display:inline"
 		textoRespuesta.titulo="Derrotaste a tu estupidez, bien ahi flaco"
@@ -191,7 +205,8 @@ function jugando(){
 		document.getElementById("texto").innerHTML = "<p id='titulo'>"+textoRespuesta.titulo+"</p>"
 		document.getElementById("texto").innerHTML += "<p id='subtitulo'>"+textoRespuesta.subtitulo+"</p>"
 		document.getElementById("container").classList.remove("d-flex")
-		document.getElementById("container").classList.add("d-none")	
+		document.getElementById("container").classList.add("d-none")
+		document.getElementById("timer").style="display:none"	
 	} 
 	else if (juego.estado=="perdiste"){
 		document.getElementById("texto").style="display:inline"
@@ -200,7 +215,8 @@ function jugando(){
 		document.getElementById("texto").innerHTML = "<p id='titulo'>"+textoRespuesta.titulo+"</p>"
 		document.getElementById("texto").innerHTML += "<p id='subtitulo'>"+textoRespuesta.subtitulo+"</p>"			
 		document.getElementById("container").classList.remove("d-flex")
-		document.getElementById("container").classList.add("d-none")		
+		document.getElementById("container").classList.add("d-none")	
+		document.getElementById("timer").style="display:none"	
 	}
 }
 function dibujarHp(){
@@ -219,6 +235,10 @@ var yaUsado=[];
 //jugar(yaUsado);
 
 function jugar(asd){
+	timer=10;
+	clearInterval(intervalo)
+	timerr()
+	document.getElementById("res").style="display:inline"
 	var indice_aleatorio = Math.floor(Math.random()*preguntas.length);
 	var respuestas_posibles = respuestas[indice_aleatorio];
 
@@ -251,7 +271,9 @@ function jugar(asd){
 	}
 }
 function comprobar(respuesta){
-	if(respuesta==rc){
+	if(respuesta==rc && timer>0){
+		score+=10*(timer+racha);
+		racha++
 		if (respuesta==0){
 			pinia();
 			malo.hp-=10
@@ -271,8 +293,14 @@ function comprobar(respuesta){
 		}
 	}
 	else{
-		wachin.hp-=10
-		
+		racha=0;
+		if (score>=20){
+			score-=20;
+		}
+		else{
+			score=0;
+		}
+		enemi();
 	}
 	if (malo.hp<=0) {
 		juego.estado="ganaste";
@@ -280,7 +308,11 @@ function comprobar(respuesta){
 	else if (wachin.hp<=0){
 		juego.estado="perdiste";
 	}
+	document.getElementById("res").style="display:none"
+	setTimeout(function (){
 	jugar(yaUsado);
+
+},1000)
 }
 document.getElementById("texto").style="display:none"
 document.getElementById("preg").style="display:none"
