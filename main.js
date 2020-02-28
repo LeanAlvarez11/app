@@ -27,7 +27,9 @@ var srcY=0;
 var character = new Image(); 
 			
 character.src = "theBoy3.png";
-
+document.getElementById("texto").style="display:none"
+document.getElementById("preg").style="display:none"
+document.getElementById("canvasDiv").style="display:none"
 function updateFrame(){
 	
 
@@ -183,6 +185,7 @@ function actualizar(){
 }
 function jugando(){
 	if (juego.estado=="ganaste"){
+		document.getElementById("texto").style="display:inline"
 		textoRespuesta.titulo="Derrotaste a tu estupidez, bien ahi flaco"
 		textoRespuesta.subtitulo="Pulsa R para reiniciar"
 		document.getElementById("texto").innerHTML = "<p id='titulo'>"+textoRespuesta.titulo+"</p>"
@@ -191,6 +194,7 @@ function jugando(){
 		document.getElementById("container").classList.add("d-none")	
 	} 
 	else if (juego.estado=="perdiste"){
+		document.getElementById("texto").style="display:inline"
 		textoRespuesta.titulo="Bueno.. al parecer tus papas son primos man"
 		textoRespuesta.subtitulo="Pulsa R para reiniciar"
 		document.getElementById("texto").innerHTML = "<p id='titulo'>"+textoRespuesta.titulo+"</p>"
@@ -278,6 +282,7 @@ function comprobar(respuesta){
 	}
 	jugar(yaUsado);
 }
+document.getElementById("texto").style="display:none"
 document.getElementById("preg").style="display:none"
 document.getElementById("canvasDiv").style="display:none"
 
