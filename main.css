@@ -8,11 +8,27 @@ header{
 	
 }
 #preg{
+	display: grid;
+	grid-template-areas: 
+	'pregunta'
+	'respuestas'
+	'respuestas'
+	'respuestas'
+	'respuestas';
+	/*'boton';*/
+	padding: 4vw;
+	grid-gap:2vw;
+
+	 
+	width: 100%;
+	height: 40vh;
 	background-image: url("madera.jpg");
 	font-family: 'Press Start 2P';
 }
 #pregunta{
-	font-size: 3vh;
+	grid-area: pregunta;
+
+	font-size: 3vw;
 	text-shadow: 0 1px 0 #E50E0E, 
                0 2px 0 #CF0F0F,
                0 3px 0 #C01010,
@@ -26,16 +42,42 @@ header{
                0 10px 10px rgba(0,0,0,.2),
                0 20px 20px rgba(0,0,0,.15);
     text-align: center;
-    margin-bottom: 4vw;
+    /*margin-bottom: 4vw;*/
 }
 #res {
-	align-items: center;
-	margin-bottom: 4vw;
+	grid-area: respuestas;
+	display:grid;
+	grid-template-areas: 
+	're1'
+	're2'
+	're3'
+	're4';
+	grid-gap: 1vw;
+	/*margin-bottom: 4vw;*/
 	text-shadow: 0.1em 0.1em 0.1em #600
 }
-#res label{
-	margin-bottom: 2vw;
+#l0{
+	grid-area:re1;
+	text-align:center;
 }
+#l1{
+	grid-area:re2;
+	text-align:center;
+}
+#l2{
+	grid-area:re3;
+	text-align:center;
+}
+#l3{
+	grid-area:re4;
+	text-align:center;
+}
+#res label{
+	/*margin-bottom: 2vw;*/
+}
+/*#contestar{
+	grid-area: boton;
+}*/
 [type=radio] { 
 	position: absolute;
 	opacity: 0;
@@ -70,10 +112,6 @@ header{
 	width: 100%;
 	height: 50vh;
 }
-#preg{
-	width: 100%;
-	height: 40vh;
-}
 
 @media only screen and (min-width: 768px){
 	body{
@@ -92,3 +130,20 @@ header{
 		height: 80vh;
 	}
 }
+/*@media only screen and (orientation:landscape){
+	body{
+		background-image: url("fondo.jpg");
+	}
+	#canvas{
+		width: 100%;
+		height: 80vh;
+	}
+	#canvasDiv{
+		width: 60vw;
+		height: 80vh;
+	}
+	#preg {
+		width: 35vw;
+		height: 80vh;
+	}
+}*/

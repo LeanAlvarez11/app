@@ -202,7 +202,7 @@ function jugar(asd){
 	var txt_respuestas=""
 	for (i in respuestas_ordenadas)
 	{
-		txt_respuestas+="<input type='radio' name='res' value='"+i+"' id='r"+i+"'><label for='r"+i+"'>"+respuestas_ordenadas[i]+"</label><br>";
+		txt_respuestas+="<input type='radio' name='res' value='"+i+"' id='r"+i+"' onclick='comprobar()'><label id='l"+i+"' for='r"+i+"'>"+respuestas_ordenadas[i]+"</label>";
 	}
 
 	if (asd.indexOf(preguntas[indice_aleatorio])==-1){
