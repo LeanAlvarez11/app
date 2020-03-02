@@ -10,10 +10,7 @@ header{
 #preg{
 	display: grid;
 	grid-template-areas: 
-	'pregunta'
-	'respuestas'
-	'respuestas'
-	'respuestas'
+	'pregunta',
 	'respuestas';
 	/*'boton';*/
 	padding: 4vw;
@@ -74,8 +71,11 @@ header{
 	grid-gap: 1vw;
 	/*margin-bottom: 4vw;*/
 	text-shadow: 0.1em 0.1em 0.1em #600;
-	font-size:1.5vh;
+	font-size:2vh;
 }
+	#res p{
+		background-image: url("asd.jpg");
+	}
 #l0{
 	grid-area:re1;
 	text-align:center;
@@ -116,7 +116,7 @@ header{
 #contain{
 		grid-template-columns: 60vw 40vw;
 		grid-template-rows: auto; 
-		grid-template-areas: "canvas body"
+		grid-template-areas: "canvas body";
 }
 #canvas{
 	width: 100%;
@@ -175,7 +175,7 @@ header{
 		height: 80vh;
 	}
 	#texto{
-		font-size: 10vh
+		font-size: 10vh;
 	}
 	#res{
 		font-size:1.5vw;
