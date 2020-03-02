@@ -193,7 +193,7 @@ function jugando(){
 	if (juego.estado=="ganaste"){
 		document.getElementById("texto").style="display:inline"
 		textoRespuesta.titulo="Derrotaste a tu estupidez, bien ahi flaco"
-		textoRespuesta.subtitulo="Pulsa R para reiniciar"
+		textoRespuesta.subtitulo="Tu Score final es: "+score+""
 		document.getElementById("texto").innerHTML = "<p id='titulo'>"+textoRespuesta.titulo+"</p>"
 		document.getElementById("texto").innerHTML += "<p id='subtitulo'>"+textoRespuesta.subtitulo+"</p>"
 		document.getElementById("container").classList.remove("d-flex")
@@ -203,7 +203,7 @@ function jugando(){
 	else if (juego.estado=="perdiste"){
 		document.getElementById("texto").style="display:inline"
 		textoRespuesta.titulo="Bueno.. al parecer tus papas son primos man"
-		textoRespuesta.subtitulo="Pulsa R para reiniciar"
+		textoRespuesta.subtitulo="Tu Score final es: "+score+""
 		document.getElementById("texto").innerHTML = "<p id='titulo'>"+textoRespuesta.titulo+"</p>"
 		document.getElementById("texto").innerHTML += "<p id='subtitulo'>"+textoRespuesta.subtitulo+"</p>"			
 		document.getElementById("container").classList.remove("d-flex")
