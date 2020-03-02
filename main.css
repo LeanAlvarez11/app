@@ -73,7 +73,8 @@ header{
 	're4';
 	grid-gap: 1vw;
 	/*margin-bottom: 4vw;*/
-	text-shadow: 0.1em 0.1em 0.1em #600
+	text-shadow: 0.1em 0.1em 0.1em #600;
+	font-size:1.5vh;
 }
 #l0{
 	grid-area:re1;
@@ -175,6 +176,9 @@ header{
 	}
 	#texto{
 		font-size: 10vh
+	}
+	#res{
+		font-size:1.5vw;
 	}
 	#botones{
 		flex-direction: row;

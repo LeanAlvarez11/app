@@ -3,28 +3,58 @@ var canvas = document.querySelector ("#canvas");
 canvas.width= 600
 canvas.height = 500
 var ctx = canvas.getContext('2d');
+var aux = {}
+var wachin= {
+	hp:100,
+	rows: 1, 
+	cols:4, 
+	spriteWidth : 900, 
+	spriteHeight : 350,
+	width: 900/4,
+	height: 350/1, 
+	curFrame : 0,
+	frameCount : 4, 
+	x:50,
+	y: (canvas.height /2 ) -150,
+	srcX:0,
+	srcY:0, 
+	image: new Image(), 
+}
 
-var spriteWidth = 900; 
-var spriteHeight = 350; 
-
-var rows = 1; 
-var cols = 4; 
-
-
-var width = spriteWidth/cols; 
-
-var height = spriteHeight/rows; 
-
-var curFrame = 0; 
-
-var frameCount = 4; 
+var malo= {
+	hp:100,
+	rows: 1, 
+	cols:10, 
+	spriteWidth : 3130, 
+	spriteHeight : 350,
+	width: 3130/10, 
+	height: 350/1, 
+	curFrame : 0,
+	frameCount : 10, 
+	x:300,
+	y: (canvas.height /2 ) -150,
+	srcX:0,
+	srcY:0, 
+	image: new Image(), 
+}
+var golpeEnemigo = {
+	hp:0,
+	rows: 1, 
+	cols: 5, 
+	spriteWidth : 1565, 
+	spriteHeight : 350,
+	width: 1565/5, 
+	height: 350/1, 
+	curFrame : 0,
+	frameCount : 5, 
+	x:300,
+	y: (canvas.height /2 ) -150,
+	srcX:0,
+	srcY:0, 
+	image: new Image(), 
+}
 var score=0;
-var x=50;
-var y= (canvas.height /2 ) -150;
-var srcX=0; 
-var srcY=0; 
 var timer=10;
-var character = new Image(); 
 var intervalo;
 function timerr(){
 intervalo=setInterval(function(){
@@ -33,38 +63,29 @@ intervalo=setInterval(function(){
 },1000)
 }
 
-character.src = "theBoy3.png";
 document.getElementById("texto").style="display:none"
 document.getElementById("preg").style="display:none"
 document.getElementById("canvasDiv").style="display:none"
-function updateFrame(){
-	
-
-	curFrame = ++curFrame % frameCount; 
-
-	srcX = curFrame * width; 
-
+function updateFrame(perso){
+	perso.curFrame = ++perso.curFrame % perso.frameCount; 
+	perso.srcX = perso.curFrame * perso.width; 
 	//ctx.clearRect(x,y,width,height);
 }
+// function updateFrameEnemi(){
+// 	curFrameEnemi = ++curFrameEnemi % frameCountEnemi; 
+// 	srcXEnemi = curFrameEnemi * widthEnemi;
+// 	//ctx.clearRect(x,y,width,height);
+// }
 
-function draw(){
-	
-	updateFrame();
-	
-	ctx.drawImage(character,srcX,srcY,width,height,x,y,width,height);
+function draw(perso){
+	updateFrame(perso);
+	ctx.drawImage(perso.image,perso.srcX,perso.srcY,perso.width,perso.height,perso.x,perso.y,perso.width,perso.height);
 }
+// function drawEnemi(){
+// 	updateFrameEnemi();
+// 	ctx.drawImage(enemi,srcXEnemi,scrYEnemi,widthEnemi,heightEnemi,xEnemi,yEnemi,widthEnemi,heightEnemi);
+// }
 var racha=0;
-var wachin= {
-	hp:100,
-}
-var malo={
-	hp:100,
-	x:400,
-	y: (canvas.height /2 ) -150,
-	width:150,
-	height:350,
-	image:new Image(),
-}
 var textoRespuesta={
 	titulo:"",
 	subtitulo:"",
@@ -112,49 +133,38 @@ var rc;
 function loadMedia (){
 	fondo= new Image();
 	fondo.src="fond.jpg";
-	malo.image.src="opa.png"
+	wachin.image.src = "theBoy3.png";
+	malo.image.src = "spi.png";
+	golpeEnemigo.image.src = "ataqueEnemigo.png"
 	document.getElementById("preg").style="display:inline";
 	document.getElementById("canvasDiv").style="display:inline"
 	fondo.onload= function(){
-		var intervalo = window.setInterval(frameloop,1000/5);}
+		var intervalo = window.setInterval(frameloop,1000/3);}
 	}
 	function dibujarFondo (){
 		ctx.drawImage (fondo,0,0,600,500);
 		ctx.fillStyle="red";
-		ctx.font = "bold 5vh sans-serif";
-		ctx.fillText("Score: "+ score,230,100);
-		ctx.fillText("WACHIN HP: " +wachin.hp,30,40);
-		ctx.fillText("OPA HP: " +malo.hp,350,40);
-	}
-	function dibujarWachin (pj){
-		ctx.save();
-		ctx = canvas.getContext('2d');
-		ctx.drawImage(pj.image, 
-			pj.x, 
-			pj.y,
-			pj.width, pj.height)
-		ctx.restore();
+		ctx.font = "bold 2vh sans-serif";
+		ctx.fillText("Score: "+ score,300,100);
+		ctx.fillText("WACHIN HP: " +wachin.hp,100,40);
+		ctx.fillText("OPA HP: " +malo.hp,420,40);
 	}
 	function pinia(){
 	//animacionPiña
 	wachin.width=300
 	setTimeout(function (){
-		wachin.width=150
+		wachin.width=900/4
 	},1000)
 }
 function patada(){
 	//animacionPatada
 	wachin.height=500
 	setTimeout(function (){
-		wachin.height=150
+		wachin.height=350
 	},1000)
 }
 function espada(){
-	//animacionEspada
-	character.src="opa.png"
-	setTimeout(function (){
-		character.scr="theBoy.png"
-	},1000)
+	
 }
 function cabeza(){
 	//animacionCabeza
@@ -163,35 +173,14 @@ function cabeza(){
 		wachin.x=50
 	},1000)
 }
-function enemi(){
+function enemii(){
+	golpeEnemigo.hp=malo.hp
+	aux=malo
+	malo=golpeEnemigo
+	setTimeout(function(){
+	malo=aux
+	},1500)
 	wachin.hp-=10
-}
-function actualizar(){
-	var respuesta = $("input[type=radio]:checked").val()
-	if (respuesta==1){
-		pinia();
-		malo.hp-=10
-
-	}
-	else if (respuesta==2){
-		patada();
-		malo.hp-=10
-	}
-	else if (respuesta==3){
-		espada();
-		malo.hp-=10
-	}
-	else if (respuesta==4){
-		cabeza();
-		malo.hp-=10
-	}
-	document.querySelector("input[type=radio]:checked").checked = false
-	if (malo.hp<=0) {
-		juego.estado="ganaste";
-	}
-	else if (wachin.hp==0){
-		juego.estado="perdiste"	
-	}
 }
 function jugando(){
 	if (timer<=0){
@@ -224,10 +213,9 @@ function dibujarHp(){
 }
 function frameloop(){
 	dibujarFondo();
-	draw()
-	// dibujarWachin(wachin);
-	dibujarWachin(malo);
-	// actualizar();
+	draw(wachin);
+	draw(malo)
+	// drawEnemi();
 	jugando()
 }
 
@@ -300,7 +288,7 @@ function comprobar(respuesta){
 		else{
 			score=0;
 		}
-		enemi();
+		enemii();
 	}
 	if (malo.hp<=0) {
 		juego.estado="ganaste";
@@ -312,7 +300,7 @@ function comprobar(respuesta){
 	setTimeout(function (){
 	jugar(yaUsado);
 
-},1000)
+},1500)
 }
 document.getElementById("texto").style="display:none"
 document.getElementById("preg").style="display:none"
