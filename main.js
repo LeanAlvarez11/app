@@ -158,13 +158,16 @@ function loadMedia (){
 }
 function patada(){
 	//animacionPatada
-	wachin.height=500
+	wachin.y=500
 	setTimeout(function (){
-		wachin.height=350
+		wachin.y=(canvas.height /2 ) -150
 	},1000)
 }
 function espada(){
-	
+	wachin.image.src="ataqueEnemigo.png";
+		setTimeout(function (){
+		wachin.image.src="theBoy3.png";
+	},1000)
 }
 function cabeza(){
 	//animacionCabeza
