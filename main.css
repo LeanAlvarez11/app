@@ -5,7 +5,21 @@ header{
 	margin: 0;
 	width: 100%;
 	height: 80px;
-	
+}
+header a{
+		font-family: 'Press Start 2P';
+		text-shadow: 0 1px 0 #E50E0E, 
+               0 2px 0 #CF0F0F,
+               0 3px 0 #C01010,
+               0 4px 0 #9B0E0E,
+               0 5px 0 #6C0A0A,
+               0 6px 1px rgba(0,0,0,.1),
+               0 0 5px rgba(0,0,0,.1),
+               0 1px 3px rgba(0,0,0,.3),
+               0 3px 5px rgba(0,0,0,.2),
+               0 5px 10px rgba(0,0,0,.25),
+               0 10px 10px rgba(0,0,0,.2),
+               0 20px 20px rgba(0,0,0,.15);
 }
 #preg{
 	display: grid;
