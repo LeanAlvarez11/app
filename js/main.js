@@ -103,6 +103,7 @@ var sonidoEspada;
 var sonidoInterferencia;
 var sonidoEnemigo;
 var sonidoFondo;
+var sonidoDaniado;
 var score=0;
 var timer=10;
 var intervalo;
@@ -197,6 +198,8 @@ function loadMedia (){
 	sonidoInterferencia = document.createElement("audio")
 	sonidoEspada.setAttribute("src","sounds/sword.mp3")
 	sonidoFondo = document.createElement("audio")
+	sonidoDaniado = document.createElement("audio")
+	sonidoDaniado.setAttribute("src","sounds/damage.mp3")
 	sonidoFondo.setAttribute("src","sounds/fondo.mp3")
 	sonidoInterferencia.setAttribute("src","sounds/interference.mp3")
 	sonidoEnemigo.setAttribute("src","sounds/sonidoEnemigo.mp3")
@@ -278,7 +281,7 @@ function cabeza(){
 	},1000)
 }
 function wachinDaniado(){
-	sonidoEspada.play()
+	sonidoDaniado.play()
 	auxw=wachin
 	wachin=wachinDanio
 	setTimeout(function(){
@@ -313,8 +316,9 @@ function enemii(){
 	corazones.length--
 }
 function verificarTiempo(){
-		if (timer<0){
+		if (timer<=-1){
 		enemii()
+		wachinDaniado()
 		if (corazones.length==0){
 			juego.estado="perdiste";
 			jugando()
@@ -403,14 +407,14 @@ function jugar(asd){
 	}
 }
 function comprobar(respuesta){
-	if (timer>0){
+	if (timer>=0){
 	if(respuesta==rc){
 		score+=10*(timer+racha);
 		racha++
+		timer=10;
 		if (respuesta==0){
 			pinia();
 			danioEnemigoo();
-
 		}
 		else if (respuesta==1){
 			patada();
@@ -424,11 +428,13 @@ function comprobar(respuesta){
 		else if (respuesta==3){
 			cabeza();
 			danioEnemigoo();
+
 		}
 	}
 	else {
 		enemii();
 		wachinDaniado();
+		timer=10
 	}
 	}
 	if (corazonesEnemigos.length==0){
