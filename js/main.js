@@ -185,7 +185,7 @@ function loadMedia (){
 	corazon.src="img/logo.png";
 	corazonEnemigo= new Image();
 	corazonEnemigo.src="img/logo.png"
-	fondo.src="img/fond.jpg";
+	fondo.src="img/fondo.jpg";
 	wachin.image.src = "img/theBoy3.png";
 	malo.image.src = "img/spi.png";
 	wachinDanio.image.src= "img/wachinDanio.png";
@@ -208,9 +208,9 @@ function loadMedia (){
 	}
 	function dibujarFondo (){
 		ctx.drawImage (fondo,0,0,600,500);
-		ctx.fillStyle="red";
-		ctx.font = "bold 40px sans-serif";
-		ctx.fillText("Score: "+ score,230,110);
+		ctx.fillStyle="#0745FF";
+		ctx.font = "bold 20px pixel";
+		ctx.fillText("SCORE: "+ score,200,110);
 	}
 	function actualizaCorazones(){
 		if (juego.estado=="iniciando"){
